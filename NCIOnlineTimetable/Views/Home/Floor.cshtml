@@ -1,0 +1,7 @@
+﻿@{ 
+    ViewBag.Title = "Floor " + ViewBag.Floor;
+    string mapSource = "/Content/Images/floor_" + @ViewBag.Floor + ".png";
+}
+
+<h1>@ViewBag.Title</h1>
+<img id="mapImage" src="@mapSource" />

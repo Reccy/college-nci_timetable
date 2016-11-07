@@ -8,8 +8,14 @@ namespace NCIOnlineTimetable.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        public ActionResult Floor(int id)
         {
+            if (id < 1)
+                id = 1;
+            else if (id > 3)
+                id = 3;
+
+            ViewBag.Floor = id;
             return View();
         }
 
