@@ -26,5 +26,21 @@ textarea {
 #mapImage {
     margin-left: auto;
     margin-right: auto;
-    display: block;
+    display: inline-block;
+    border: 1px double black;
+    padding: 5px;
+    position: relative;
+}
+
+.mapButton {
+    background: chartreuse;
+    opacity: 0.5;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.mapButton:hover {
+    opacity: 0.8;
+    cursor: pointer;
 }
