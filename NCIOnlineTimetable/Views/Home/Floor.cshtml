@@ -1,6 +1,7 @@
 ﻿@{ 
     ViewBag.Title = "Floor " + ViewBag.Floor;
     string mapSource = "/Content/Images/floor_" + @ViewBag.Floor + ".png";
+    string buttonSource = "/Content/Floor_HTML/Floor" + @ViewBag.Floor + "Buttons.html";
     string baseURL = HttpContext.Current.Request.ToString();
 }
 
@@ -19,32 +20,15 @@
             <button type="button" onclick="gotoFloor(3)">Floor 3</button>
         </div>
 
-        <!-- Floor 1 rooms -->
-        <!-- v class="mapButton" style="height: 55px; width: 50px; top: 260px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 45px; width: 50px; top: 215px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 50px; width: 50px; top: 315px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 50px; width: 90px; top: 365px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 90px; width: 35px; top: 215px; left: 80px;"></div>     -->
-        <!-- v class="mapButton" style="height: 45px; width: 35px; top: 305px; left: 80px;"></div>     -->
-        <!-- <div class="mapButton" style="height: 55px; width: 75px; top: 360px; left: 164px;"></div> -->
+        <!-- Floor Buttons -->
+        @Html.Raw(File.ReadAllText(Server.MapPath(buttonSource)))
+    </div>
 
-        <!-- Floor 2 rooms -->
-        <div class="mapButton" style="height: 45px; width: 50px; top: 215px; left: 25px;"></div>
-        <div class="mapButton" style="height: 55px; width: 50px; top: 260px; left: 25px;"></div>
-        <div class="mapButton" style="height: 50px; width: 50px; top: 315px; left: 25px;"></div>
-        <div class="mapButton" style="height: 50px; width: 90px; top: 365px; left: 25px;"></div>
-        <div class="mapButton" style="height: 90px; width: 35px; top: 215px; left: 80px;"></div>
-        <div class="mapButton" style="height: 45px; width: 35px; top: 305px; left: 80px;"></div>
-        <div class="mapButton" style="height: 55px; width: 75px; top: 360px; left: 164px;"></div>
-
-        <!-- Floor 3 rooms -->
-        <!-- <div class="mapButton" style="height: 55px; width: 50px; top: 260px; left: 25px;"></div>  -->
-        <!-- v class="mapButton" style="height: 50px; width: 50px; top: 315px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 50px; width: 90px; top: 365px; left: 25px;"></div>     -->
-        <!-- v class="mapButton" style="height: 90px; width: 35px; top: 215px; left: 80px;"></div>     -->
-        <!-- v class="mapButton" style="height: 45px; width: 35px; top: 305px; left: 80px;"></div>     -->
-        <!-- v class="mapButton" style="height: 55px; width: 75px; top: 360px; left: 164px;"></div>    -->
-        <!-- v class="mapButton" style="height: 45px; width: 50px; top: 215px; left: 25px;"></div>     -->
+    <div style="margin-left: 20px;" id="mapImage">
+        <p><b>1.01 / SCR 1</b></p>
+        <p>Currently Occupied by BSHC3</p>
+        <button>Book Room</button>
+        <button>View Timetable</button>
     </div>
 </div>
 
