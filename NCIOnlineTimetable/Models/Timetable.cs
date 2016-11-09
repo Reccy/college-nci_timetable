@@ -5,10 +5,17 @@ using System.Web;
 
 namespace NCIOnlineTimetable.Models
 {
-    public class Room
+    public class Timetable
     {
+        private ICollection<Slot> _slots;
+
         public int Id { get; set; }
-        public int Floor { get; set; }
         public string Name { get; set; }
+        public bool IsCourse { get; set; }
+
+        public Timetable()
+        {
+            _slots = new List<Slot>();
+        }
     }
 }

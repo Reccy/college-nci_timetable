@@ -5,10 +5,11 @@ using System.Web;
 
 namespace NCIOnlineTimetable.Models
 {
-    public class Room
+    public class Slot
     {
         public int Id { get; set; }
-        public int Floor { get; set; }
-        public string Name { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
+        public Room Room { get; set; }
     }
 }
