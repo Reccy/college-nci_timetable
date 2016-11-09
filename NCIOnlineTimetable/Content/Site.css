@@ -36,7 +36,6 @@ textarea {
 }
 
 .mapButton {
-    background: chartreuse;
     opacity: 0.5;
     position: absolute;
     top: 0px;
@@ -45,6 +44,18 @@ textarea {
     justify-content:center;
     align-items:center;
     color: black;
+}
+
+.freeRoom {
+    background: deepskyblue;
+}
+
+.occupiedRoom {
+    background: #ff8347;
+}
+
+.selectedRoom {
+    background: greenyellow;
 }
 
 .mapButton:hover {
