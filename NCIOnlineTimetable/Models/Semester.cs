@@ -17,5 +17,10 @@ namespace NCIOnlineTimetable.Models
         public int Id { get; set; }
         public int Year { get; set; }
         public int Term { get; set; }
+        public List<Timetable> Timetables
+        {
+            get { return _timetables as List<Timetable>; }
+            set { _timetables = value; }
+        }
     }
 }
