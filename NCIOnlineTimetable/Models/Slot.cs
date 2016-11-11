@@ -7,9 +7,12 @@ namespace NCIOnlineTimetable.Models
 {
     public class Slot
     {
+        public enum Weekday { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };
+
         public int Id { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public int StartTime { get; set; }
+        public int EndTime { get; set; }
+        public Weekday Day { get; set; }
         public Room Room { get; set; }
     }
 }
