@@ -23,6 +23,24 @@
         <!-- Floor Buttons -->
         @Html.Raw(File.ReadAllText(Server.MapPath(buttonSource)))
 
+        <p>
+    @{
+        foreach (var obj in ViewBag.Timetables)
+        {
+            if (@obj.Slots.Count > 0)
+            {
+                <p style="font-weight:bold;">Room: @obj.Name</p>
+                foreach (var slot in obj.Slots)
+                {
+                    <p>Start Time: @slot.StartTime</p>
+                    <p>End Time: @slot.EndTime</p>
+                    <p>Slot Name: @slot.Name</p>
+                    <p>Day: @slot.Day</p>
+                }
+            }
+        }
+    }
+        </p>
         <!-- Map Legend -->
         <div style="border: 1px double black; position:absolute; top: 5px; left: 5px;">
             <p style="margin: 0; padding-left: 5px; padding-right: 5px; font-weight: bold;">Map Legend</p>

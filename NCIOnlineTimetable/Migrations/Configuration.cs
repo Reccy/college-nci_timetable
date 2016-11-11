@@ -109,7 +109,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Slot { Id = 25, Name = "The Computing Industry", StartTime = 15, EndTime = 17, Day = Slot.Weekday.Tuesday, Room = rooms.First<Room>(s => s.Name == "3.02") },
                 //Wednesday
                 new Slot { Id = 26, Name = "Web Design", StartTime = 9, EndTime = 11, Day = Slot.Weekday.Wednesday, Room = rooms.First<Room>(s => s.Name == "3.03") },
-                new Slot { Id = 27, Name = "Introduction to Mathematics for Business and Computing", StartTime = 11, EndTime = 13, Day = Slot.Weekday.Wednesday, Room = rooms.First<Room>(s => s.Name == "3.01 / SCR3") },
+                new Slot { Id = 27, Name = "Introduction to Mathematics for Business & Computing", StartTime = 11, EndTime = 13, Day = Slot.Weekday.Wednesday, Room = rooms.First<Room>(s => s.Name == "3.01 / SCR3") },
                 //Thursday
                 new Slot { Id = 28, Name = "Web Design", StartTime = 13, EndTime = 15, Day = Slot.Weekday.Thursday, Room = rooms.First<Room>(s => s.Name == "3.03") },
                 new Slot { Id = 29, Name = "The Computing Industry", StartTime = 16, EndTime = 17, Day = Slot.Weekday.Thursday, Room = rooms.First<Room>(s => s.Name == "3.01 / SCR3") },
