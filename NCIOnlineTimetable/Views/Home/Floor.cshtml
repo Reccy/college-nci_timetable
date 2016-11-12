@@ -1,8 +1,22 @@
-﻿@{ 
+﻿@using NCIOnlineTimetable.Models;
+@using System.Collections.Generic;
+@using System.Linq;
+@{ 
     ViewBag.Title = "Floor " + ViewBag.Floor;
     string mapSource = "/Content/Images/floor_" + @ViewBag.Floor + ".png";
     string buttonSource = "/Content/Floor_HTML/Floor" + @ViewBag.Floor + "Buttons.html";
     string baseURL = HttpContext.Current.Request.ToString();
+}
+
+@helper GetSlots(string roomName)
+{
+foreach(Slot s in ViewBag.Timetables)
+{
+    if(s.Room.Equals(roomName))
+    {
+        ViewBag.RoomSlot = s;
+    }
+}
 }
 
 <h1>@ViewBag.Title</h1>
@@ -23,24 +37,6 @@
         <!-- Floor Buttons -->
         @Html.Raw(File.ReadAllText(Server.MapPath(buttonSource)))
 
-        <p>
-    @{
-        foreach (var obj in ViewBag.Timetables)
-        {
-            if (@obj.Slots.Count > 0)
-            {
-                <p style="font-weight:bold;">Room: @obj.Name</p>
-                foreach (var slot in obj.Slots)
-                {
-                    <p>Start Time: @slot.StartTime</p>
-                    <p>End Time: @slot.EndTime</p>
-                    <p>Slot Name: @slot.Name</p>
-                    <p>Day: @slot.Day</p>
-                }
-            }
-        }
-    }
-        </p>
         <!-- Map Legend -->
         <div style="border: 1px double black; position:absolute; top: 5px; left: 5px;">
             <p style="margin: 0; padding-left: 5px; padding-right: 5px; font-weight: bold;">Map Legend</p>
@@ -51,9 +47,8 @@
     </div>
 
     <div style="margin-left: 20px;" id="mapImage">
-        <p><b>1.01 / SCR 1</b></p>
-        <p>Currently Occupied by BSHC3</p>
-        <button>Book Room</button>
+        <p><b>Room <span id="roomName">1.01 / SCR1</span></b></p>
+        <p>Currently Occupied by <span id="courseName">BSHC1</span></p>
         <button>View Timetable</button>
     </div>
 </div>
