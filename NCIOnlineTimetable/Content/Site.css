@@ -55,7 +55,7 @@ textarea {
 }
 
 .selectedRoom {
-    background: greenyellow;
+    background: greenyellow !important;
 }
 
 .mapButton:hover {
