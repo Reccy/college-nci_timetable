@@ -50,6 +50,7 @@
     <div style="margin-left: 20px;" id="mapImage">
         <p><b>Room: <span id="roomName">none</span></b></p>
         <p>Current Class: <span id="courseName">none</span></p>
+        <p>Current Course: <span id="degreeName">none</span></p>
         <button>View Timetable</button>
     </div>
     
@@ -67,7 +68,7 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
 <script type="text/javascript">
 
-    var uri = '../../api/timetables';
+    var uri = '../../api/';
     var timetables; //JSON for all timetables
     var currentDate = new Date();
     //var currentDay = currentDate.getDay();
@@ -97,7 +98,7 @@
         $("#dayInput").val(currentDay);
         $("#hourInput").val(currentTime);
 
-        $.getJSON(uri)
+        $.getJSON(uri + "timetables")
             .done(function (data) {
                 timetables = data;
 
@@ -135,6 +136,7 @@
 
         $("#roomName").html("none");
         $("#courseName").html("none");
+        $("#degreeName").html("none");
 
         $(".mapButton").each(function () {
             var thisRoom = $(this).html();
@@ -205,18 +207,21 @@
 
         for (var i = 0; i < timetable.Slots.length; i++) {
             var slot = timetable.Slots[i];
-
+            
             if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
                 $("#courseName").html(slot.Name);
+                getSlotCourse(slot.Id);
                 return;
             }
             else {
                 $("#courseName").html("none");
+                $("#degreeName").html("none");
             }
         }
 
         if (timetable.Slots.length == 0) {
             $("#courseName").html("none");
+            $("#degreeName").html("none");
         }
     }
 
@@ -228,5 +233,17 @@
             }
         }
         return null;
+    }
+
+    //Returns the course belonging to a slot
+    function getSlotCourse(slotId) {
+        $.get(uri + "slotcourse?slotId=" + slotId, function (data) {
+            updateSlotCourse(data);
+        });
+    }
+
+    //Updates the text referring to the slot
+    function updateSlotCourse(data) {
+        $("#degreeName").text(data);
     }
 </script>
