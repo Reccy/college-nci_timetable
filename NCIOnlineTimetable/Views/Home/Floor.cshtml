@@ -71,9 +71,9 @@
     var timetables; //JSON for all timetables
     var currentDate = new Date();
     //var currentDay = currentDate.getDay();
-    var currentDay = 0;
+    var currentDay = 1;
     //var currentTime = currentDate.getHours();
-    currentTime = 16;
+    currentTime = 11;
     var button = null;
 
     //Credit: http://www.w3schools.com/jsref/jsref_getday.asp
@@ -104,15 +104,12 @@
                 $(".mapButton").each(function () {
                     var thisRoom = $(this).html();
                     var thisTimetable = getTimetable(thisRoom);
-                    
-                    console.log("This Room:" + thisRoom);
 
                     for (var i = 0; i < thisTimetable.Slots.length; i++)
                     {
                         var slot = thisTimetable.Slots[i];
 
                         if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
-                            console.log(thisTimetable.Slots[i]);
                             $(this).addClass("occupiedRoom");
                         }
                         else
@@ -130,7 +127,6 @@
 
     //Updates the date
     function updateDate(day, time) {
-        console.log("===DATE UPDATED===");
         currentDay = day;
         currentTime = time;
 
@@ -143,30 +139,24 @@
         $(".mapButton").each(function () {
             var thisRoom = $(this).html();
             var thisTimetable = getTimetable(thisRoom);
+
             $(this).removeClass("selectedRoom");
+            $(this).removeClass("occupiedRoom");
+            $(this).removeClass("freeRoom");
 
-            console.log(thisRoom);
-
-            for (var i = 0; i < localTimetables.length; i++) {
-                var slot = localTimetables.Slots[i];
-                console.log("Checking: " + slot.Name + ", " + slot.StartTime + ", " + slot.EndTime + ", " + slot.Day);
+            for (var i = 0; i < thisTimetable.Slots.length; i++) {
+                var slot = thisTimetable.Slots[i];
 
                 if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
-                    console.log("MATCHEEEEE");
                     $(this).addClass("occupiedRoom");
-                    $(this).removeClass("freeRoom");
-                    return;
                 }
                 else {
                     $(this).addClass("freeRoom");
-                    $(this).removeClass("occupiedRoom");
-                    return;
                 }
             }
 
             if (thisTimetable.Slots.length == 0) {
                 $(this).addClass("freeRoom");
-                $(this).removeClass("occupiedRoom");
             }
         });
     }
@@ -213,13 +203,10 @@
         button = btn;
         $(button).addClass("selectedRoom");
 
-        console.log("===" + timetable.Name + "===");
         for (var i = 0; i < timetable.Slots.length; i++) {
             var slot = timetable.Slots[i];
-            console.log("Checking: " + slot.Name + ", " + slot.StartTime + ", " + slot.EndTime + ", " + slot.Day);
 
             if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
-                console.log("MATCHARINO!");
                 $("#courseName").html(slot.Name);
                 return;
             }
