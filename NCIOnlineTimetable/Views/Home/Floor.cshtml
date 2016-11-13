@@ -58,10 +58,15 @@
     <div style="margin-left: 20px; float: right;" width="200px;" id="mapImage">
         <p><b>Current Day:</b></p><span id="dayString"></span>
         <br/>
-        <input id="dayInput" type="range" name="day" min="0" max="6" step="1" oninput="updateDate(this.value, currentTime);"/>
+        <input id="dayInput" type="range" name="day" min="0" max="6" step="1" oninput="updateDate(this.value, currentTime, currentSemester);"/>
         <p><b>Current Hour:</b></p><span id="hourString"></span>
         <br/>
-        <input id="hourInput" type="range" name="hour" min="0" max="24" step="1" oninput="updateDate(currentDay, this.value);"/>
+        <input id="hourInput" type="range" name="hour" min="0" max="24" step="1" oninput="updateDate(currentDay, this.value, currentSemester);"/>
+        <p><b>Current Semester:</b></p><span id="hourString"></span>
+        <select oninput="updateDate(currentDay, currentTime, this.value);">
+            <option value="1">Semester 1</option>
+            <option value="2">Semester 2</option>
+        </select>
     </div>
 </div>
 
@@ -71,10 +76,9 @@
     var uri = '../../api/';
     var timetables; //JSON for all timetables
     var currentDate = new Date();
-    //var currentDay = currentDate.getDay();
-    var currentDay = 1;
-    //var currentTime = currentDate.getHours();
-    currentTime = 11;
+    var currentDay = (currentDate.getDay() + 6) % 7;
+    var currentTime = currentDate.getHours();
+    var currentSemester = 1;
     var button = null;
 
     //Credit: http://www.w3schools.com/jsref/jsref_getday.asp
@@ -110,11 +114,9 @@
                     {
                         var slot = thisTimetable.Slots[i];
 
-                        if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
+                        if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime) && (getSlotSemester(slot.Id) == currentSemester)) {
                             $(this).addClass("occupiedRoom");
-                        }
-                        else
-                        {
+                        } else {
                             $(this).addClass("freeRoom");
                         }
                     }
@@ -127,9 +129,10 @@
     });
 
     //Updates the date
-    function updateDate(day, time) {
+    function updateDate(day, time, semester) {
         currentDay = day;
         currentTime = time;
+        currentSemester = semester;
 
         $("#dayString").text(weekday[currentDay]);
         $("#hourString").text(currentTime);
@@ -149,10 +152,9 @@
             for (var i = 0; i < thisTimetable.Slots.length; i++) {
                 var slot = thisTimetable.Slots[i];
 
-                if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
+                if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime) && (getSlotSemester(slot.Id) == currentSemester)) {
                     $(this).addClass("occupiedRoom");
-                }
-                else {
+                } else {
                     $(this).addClass("freeRoom");
                 }
             }
@@ -208,12 +210,11 @@
         for (var i = 0; i < timetable.Slots.length; i++) {
             var slot = timetable.Slots[i];
             
-            if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime)) {
+            if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime) && (getSlotSemester(slot.Id) == currentSemester)) {
                 $("#courseName").html(slot.Name);
                 getSlotCourse(slot.Id);
                 return;
-            }
-            else {
+            } else {
                 $("#courseName").html("none");
                 $("#degreeName").html("none");
             }
@@ -245,5 +246,23 @@
     //Updates the text referring to the slot
     function updateSlotCourse(data) {
         $("#degreeName").text(data);
+    }
+
+    //Returns the semester belonging to a slot
+    function getSlotSemester(slotId) {
+
+        var result = null;
+
+        $.ajax({
+            url: uri + "slotsemester",
+            data: "slotId=" + slotId,
+            type: "GET",
+            async: false,
+            success: function (data) {
+                result = data;
+            }
+        });
+
+        return result;
     }
 </script>

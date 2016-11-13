@@ -16,7 +16,6 @@ namespace NCIOnlineTimetable.Controllers
             TimetableContext context = new TimetableContext();
 
             List<int> slot = context.Database.SqlQuery<int>(@"SELECT Timetable_Id FROM Slots WHERE Id = '" + slotId + "';").ToList<int>();
-            System.Diagnostics.Debug.WriteLine("Id: " + slot[0]);
             List<string> course = context.Database.SqlQuery<string>(@"SELECT Name FROM Timetables WHERE Id = '" + slot[0] + "';").ToList<string>();
 
             return Ok(course[0]);
