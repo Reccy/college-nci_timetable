@@ -51,7 +51,7 @@
         <p><b>Room: <span id="roomName">none</span></b></p>
         <p>Current Class: <span id="courseName">none</span></p>
         <p>Current Course: <span id="degreeName">none</span></p>
-        <button id="timetableButton">View Timetable</button>
+        <button style="display: none;" id="timetableButton" onclick="displayTimetable(selectedTimetable, currentSemester);">View Timetable</button>
     </div>
     
     <!-- Time Panel -->
@@ -80,6 +80,7 @@
     var currentTime = currentDate.getHours();
     var currentSemester = 1;
     var button = null;
+    var selectedTimetable = null;
 
     //Credit: http://www.w3schools.com/jsref/jsref_getday.asp
     var weekday = new Array(7);
@@ -101,7 +102,6 @@
         $("#hourString").text(currentTime);
         $("#dayInput").val(currentDay);
         $("#hourInput").val(currentTime);
-        $("#timetableButton").css("display", "none");
 
         $.getJSON(uri + "timetables")
             .done(function (data) {
@@ -141,7 +141,6 @@
         $("#roomName").html("none");
         $("#courseName").html("none");
         $("#degreeName").html("none");
-        $("#timetableButton").css("display", "none");
 
         $(".mapButton").each(function () {
             var thisRoom = $(this).html();
@@ -200,7 +199,8 @@
     //Updates the side panel based on the room
     function updateSidePanel(btn, room) {
         var timetable = getTimetable(room);
-        
+        selectedTimetable = timetable;
+
         if (button !== null) {
             $(button).removeClass("selectedRoom");
         }
@@ -208,6 +208,7 @@
         $("#roomName").html(room);
         button = btn;
         $(button).addClass("selectedRoom");
+        $("#timetableButton").css("display", "inline-block");
 
         for (var i = 0; i < timetable.Slots.length; i++) {
             var slot = timetable.Slots[i];
@@ -215,19 +216,16 @@
             if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime) && (getSlotSemester(slot.Id) == currentSemester)) {
                 $("#courseName").html(slot.Name);
                 getSlotCourse(slot.Id);
-                $("#timetableButton").css("display", "inline-block");
                 return;
             } else {
                 $("#courseName").html("none");
                 $("#degreeName").html("none");
-                $("#timetableButton").css("display", "none");
             }
         }
 
         if (timetable.Slots.length == 0) {
             $("#courseName").html("none");
             $("#degreeName").html("none");
-            $("#timetableButton").css("display", "none");
         }
     }
 
@@ -270,4 +268,18 @@
 
         return result;
     }
+
+    //Displays a timetable
+    function displayTimetable(timetable, semester) {
+
+        if (timetable === null)
+        {
+            console.log("No timetable in params");
+            return;
+        }
+
+        var id = timetable.Id;
+        window.open(uri + "../../home/timetable/" + id + "?semester=" + semester);
+    }
+
 </script>

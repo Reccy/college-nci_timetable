@@ -62,3 +62,9 @@ textarea {
     opacity: 0.8;
     cursor: pointer;
 }
+
+#generatedTimetable th {
+    width: 200px;
+    border: 1px solid black;
+    padding-left: 5px;
+}

@@ -20,6 +20,14 @@ namespace NCIOnlineTimetable.Controllers
             return View();
         }
 
+        public ActionResult Timetable(int id, int semester = 1)
+        {
+            ViewBag.TimetableId = id;
+            ViewBag.Semester = semester;
+
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
