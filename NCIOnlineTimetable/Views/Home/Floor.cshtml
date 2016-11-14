@@ -51,7 +51,7 @@
         <p><b>Room: <span id="roomName">none</span></b></p>
         <p>Current Class: <span id="courseName">none</span></p>
         <p>Current Course: <span id="degreeName">none</span></p>
-        <button>View Timetable</button>
+        <button id="timetableButton">View Timetable</button>
     </div>
     
     <!-- Time Panel -->
@@ -59,9 +59,9 @@
         <p><b>Current Day:</b></p><span id="dayString"></span>
         <br/>
         <input id="dayInput" type="range" name="day" min="0" max="6" step="1" oninput="updateDate(this.value, currentTime, currentSemester);"/>
-        <p><b>Current Hour:</b></p><span id="hourString"></span>
+        <p><b>Current Hour:</b></p><span id="hourString"></span>:00
         <br/>
-        <input id="hourInput" type="range" name="hour" min="0" max="24" step="1" oninput="updateDate(currentDay, this.value, currentSemester);"/>
+        <input id="hourInput" type="range" name="hour" min="0" max="23" step="1" oninput="updateDate(currentDay, this.value, currentSemester);"/>
         <p><b>Current Semester:</b></p><span id="hourString"></span>
         <select oninput="updateDate(currentDay, currentTime, this.value);">
             <option value="1">Semester 1</option>
@@ -101,6 +101,7 @@
         $("#hourString").text(currentTime);
         $("#dayInput").val(currentDay);
         $("#hourInput").val(currentTime);
+        $("#timetableButton").css("display", "none");
 
         $.getJSON(uri + "timetables")
             .done(function (data) {
@@ -140,6 +141,7 @@
         $("#roomName").html("none");
         $("#courseName").html("none");
         $("#degreeName").html("none");
+        $("#timetableButton").css("display", "none");
 
         $(".mapButton").each(function () {
             var thisRoom = $(this).html();
@@ -213,16 +215,19 @@
             if ((currentDay == slot.Day) && (slot.StartTime <= currentTime && slot.EndTime > currentTime) && (getSlotSemester(slot.Id) == currentSemester)) {
                 $("#courseName").html(slot.Name);
                 getSlotCourse(slot.Id);
+                $("#timetableButton").css("display", "inline-block");
                 return;
             } else {
                 $("#courseName").html("none");
                 $("#degreeName").html("none");
+                $("#timetableButton").css("display", "none");
             }
         }
 
         if (timetable.Slots.length == 0) {
             $("#courseName").html("none");
             $("#degreeName").html("none");
+            $("#timetableButton").css("display", "none");
         }
     }
 
