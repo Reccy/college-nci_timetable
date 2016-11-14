@@ -212,9 +212,13 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\SemesterController.cs" />
+    <Compile Include="Controllers\SlotController.cs" />
     <Compile Include="Controllers\SlotCourseController.cs" />
     <Compile Include="Controllers\SlotRoomController.cs" />
     <Compile Include="Controllers\SlotSemesterController.cs" />
+    <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Controllers\TimetablesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -306,6 +310,26 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Home\Timetable.cshtml" />
+    <Content Include="Views\Timetable\Create.cshtml" />
+    <Content Include="Views\Timetable\Delete.cshtml" />
+    <Content Include="Views\Timetable\Details.cshtml" />
+    <Content Include="Views\Timetable\Edit.cshtml" />
+    <Content Include="Views\Timetable\Index.cshtml" />
+    <Content Include="Views\Slot\Create.cshtml" />
+    <Content Include="Views\Slot\Delete.cshtml" />
+    <Content Include="Views\Slot\Details.cshtml" />
+    <Content Include="Views\Slot\Edit.cshtml" />
+    <Content Include="Views\Slot\Index.cshtml" />
+    <Content Include="Views\Room\Create.cshtml" />
+    <Content Include="Views\Room\Delete.cshtml" />
+    <Content Include="Views\Room\Details.cshtml" />
+    <Content Include="Views\Room\Edit.cshtml" />
+    <Content Include="Views\Room\Index.cshtml" />
+    <Content Include="Views\Semester\Create.cshtml" />
+    <Content Include="Views\Semester\Delete.cshtml" />
+    <Content Include="Views\Semester\Details.cshtml" />
+    <Content Include="Views\Semester\Edit.cshtml" />
+    <Content Include="Views\Semester\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

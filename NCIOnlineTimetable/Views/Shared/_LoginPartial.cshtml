@@ -6,6 +6,10 @@
     @Html.AntiForgeryToken()
 
     <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Semesters", "Index", "Semester")</li>
+        <li>@Html.ActionLink("Timetables", "Index", "Timetable")</li>
+        <li>@Html.ActionLink("Slots", "Index", "Slot")</li>
+        <li>@Html.ActionLink("Rooms", "Index", "Room")</li>
         <li>
             @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
         </li>
