@@ -53,20 +53,30 @@
         <p>Current Course: <span id="degreeName">none</span></p>
         <button style="display: none;" id="timetableButton" onclick="displayTimetable(selectedTimetable, currentSemester);">View Timetable</button>
     </div>
-    
+
     <!-- Time Panel -->
     <div style="margin-left: 20px; float: right;" width="200px;" id="mapImage">
         <p><b>Current Day:</b></p><span id="dayString"></span>
-        <br/>
-        <input id="dayInput" type="range" name="day" min="0" max="6" step="1" oninput="updateDate(this.value, currentTime, currentSemester);"/>
+        <br />
+        <input id="dayInput" type="range" name="day" min="0" max="6" step="1" oninput="updateDate(this.value, currentTime, currentSemester);" />
         <p><b>Current Hour:</b></p><span id="hourString"></span>:00
-        <br/>
-        <input id="hourInput" type="range" name="hour" min="0" max="23" step="1" oninput="updateDate(currentDay, this.value, currentSemester);"/>
+        <br />
+        <input id="hourInput" type="range" name="hour" min="0" max="23" step="1" oninput="updateDate(currentDay, this.value, currentSemester);" />
         <p><b>Current Semester:</b></p><span id="hourString"></span>
         <select oninput="updateDate(currentDay, currentTime, this.value);">
             <option value="1">Semester 1</option>
             <option value="2">Semester 2</option>
         </select>
+    </div>
+
+    <!-- Course Panel -->
+    <div style="margin-left: 20px; float: right;" id="mapImage">
+        <p><b>Course Timetable</b></p>
+        <select id="courseSelect">
+        </select>
+        <br />
+        <br />
+        <button onclick="displayTimetable(getTimetable($('#courseSelect').val()));">Course Timetable</button>
     </div>
 </div>
 
@@ -126,6 +136,13 @@
                         $(this).addClass("freeRoom");
                     }
                 });
+
+                var courses = getCourseTimetableNames();
+
+                for (var i = 0; i < courses.length; i++) {
+                    $("#courseSelect").append("<option value='" + courses[i] + "'>" + courses[i] + "</option>");
+                }
+
             });
     });
 
@@ -230,13 +247,26 @@
     }
 
     //Get timetable by name
-    function getTimetable(room) {
+    function getTimetable(name) {
         for (var i = 0; i < timetables.length; i++) {
-            if (timetables[i].Name == room) {
+            if (timetables[i].Name == name) {
                 return timetables[i];
             }
         }
         return null;
+    }
+
+    //Returns all course timetables' names
+    function getCourseTimetableNames() {
+        var results = [];
+
+        for (var i = 0; i < timetables.length; i++) {
+            if (timetables[i].IsCourse) {
+                results.push(timetables[i].Name);
+            }
+        }
+
+        return results;
     }
 
     //Returns the course belonging to a slot
