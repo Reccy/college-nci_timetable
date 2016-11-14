@@ -16,6 +16,8 @@ namespace NCIOnlineTimetable.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Course { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

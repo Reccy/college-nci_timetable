@@ -9,6 +9,11 @@ namespace NCIOnlineTimetable.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Index()
+        {
+            return RedirectToAction("Floor");
+        }
+
         public ActionResult Floor(int id)
         {
             if (id < 1)
