@@ -63,7 +63,9 @@ namespace NCIOnlineTimetable.Controllers
                 var query = from timetable in context.Timetables
                             select timetable;
 
-                foreach (var timetable in query)
+                List<Timetable> timetableList = query.ToList<Timetable>();
+
+                foreach (var timetable in timetableList)
                 {
                     var slotQuery = from slot in timetable.Slots
                                     select slot;
