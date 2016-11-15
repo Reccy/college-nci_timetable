@@ -8,7 +8,7 @@ namespace NCIOnlineTimetable.Models
 {
     public class TimetableContext : DbContext
     {
-        public TimetableContext() : base("TimetableContext"){}
+        public TimetableContext() : base("name=DefaultConnection") {}
 
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<Timetable> Timetables { get; set; }
