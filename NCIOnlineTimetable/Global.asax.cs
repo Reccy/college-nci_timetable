@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using System.Web.Http;
+using System.Data.Entity.Migrations;
+using NCIOnlineTimetable.Migrations;
 
 namespace NCIOnlineTimetable
 {
@@ -19,6 +21,9 @@ namespace NCIOnlineTimetable
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            var migrator = new DbMigrator(new Configuration());
+            migrator.Update();
         }
     }
 }
