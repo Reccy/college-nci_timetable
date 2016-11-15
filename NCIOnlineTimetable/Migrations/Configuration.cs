@@ -17,6 +17,9 @@ namespace NCIOnlineTimetable.Migrations
         protected override void Seed(NCIOnlineTimetable.Models.TimetableContext context)
         {
 
+            //Delete DB
+            context.Database.Delete();
+
             //
             //Rooms
             //
@@ -49,7 +52,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Room { Id = 21, Floor = 3, Name = "Theatre 3" }
             };
 
-            rooms.ForEach(s => context.Rooms.Add(s));
+            rooms.ForEach(s => context.Rooms.AddOrUpdate(s));
 
             //
             //Slots
@@ -74,7 +77,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Slot { Id = 10, Name = "The Computing Industry", StartTime = 15, EndTime = 17, Day = Slot.Weekday.Thursday, Room = rooms.First<Room>(s => s.Name == "3.08") },
             };
 
-            bis_1_1_slots.ForEach(s => context.Slots.Add(s));
+            bis_1_1_slots.ForEach(s => context.Slots.AddOrUpdate(s));
 
             //BIS 1 Semester 2
             var bis_1_2_slots = new List<Slot>
@@ -96,7 +99,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Slot { Id = 21, Name = "Information Technology Project Management", StartTime = 15, EndTime = 16, Day = Slot.Weekday.Friday, Room = rooms.First<Room>(s => s.Name == "3.01 / SCR3") }
             };
 
-            bis_1_2_slots.ForEach(s => context.Slots.Add(s));
+            bis_1_2_slots.ForEach(s => context.Slots.AddOrUpdate(s));
 
             //BSHC 1 Semester 1
             var bshc_1_1_slots = new List<Slot>
@@ -118,7 +121,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Slot { Id = 31, Name = "Problem Solving and Programming Concepts", StartTime = 15, EndTime = 17, Day = Slot.Weekday.Friday, Room = rooms.First<Room>(s => s.Name == "3.03") }
             };
 
-            bshc_1_1_slots.ForEach(s => context.Slots.Add(s));
+            bshc_1_1_slots.ForEach(s => context.Slots.AddOrUpdate(s));
 
             //BSHC 1 Semester 2
             var bshc_1_2_slots = new List<Slot>
@@ -140,7 +143,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Slot { Id = 42, Name = "Information Technology Project Management", StartTime = 15, EndTime = 16, Day = Slot.Weekday.Friday, Room = rooms.First<Room>(s => s.Name == "3.01 / SCR3") }
             };
 
-            bshc_1_2_slots.ForEach(s => context.Slots.Add(s));
+            bshc_1_2_slots.ForEach(s => context.Slots.AddOrUpdate(s));
 
             //
             //Timetables
@@ -153,7 +156,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Timetable { Id = 2, Name = "BSHC 1 - Semester 1", Slots = bshc_1_1_slots, IsCourse = true }
             };
 
-            term1_timetables.ForEach(s => context.Timetables.Add(s));
+            term1_timetables.ForEach(s => context.Timetables.AddOrUpdate(s));
 
             //Semester 2 Timetables
             var term2_timetables = new List<Timetable>
@@ -162,7 +165,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Timetable { Id = 4, Name = "BSHC 2 - Semester 2", Slots = bshc_1_2_slots, IsCourse = true }
             };
 
-            term2_timetables.ForEach(s => context.Timetables.Add(s));
+            term2_timetables.ForEach(s => context.Timetables.AddOrUpdate(s));
 
             //
             //Semesters
@@ -174,7 +177,7 @@ namespace NCIOnlineTimetable.Migrations
                 new Semester { Id = 2, Term = 2, Year = 2016, Timetables = term2_timetables }
             };
 
-            semesters.ForEach(s => context.Semesters.Add(s));
+            semesters.ForEach(s => context.Semesters.AddOrUpdate(s));
             context.SaveChanges();
         }
     }
