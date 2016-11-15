@@ -17,8 +17,11 @@ namespace NCIOnlineTimetable.Migrations
         protected override void Seed(NCIOnlineTimetable.Models.TimetableContext context)
         {
 
-            //Delete DB
-            context.Database.Delete();
+            //Drop Tables
+            context.Database.ExecuteSqlCommand("DELETE FROM Semesters WHERE 1=1;");
+            context.Database.ExecuteSqlCommand("DELETE FROM Timetables WHERE 1=1;");
+            context.Database.ExecuteSqlCommand("DELETE FROM Slots WHERE 1=1;");
+            context.Database.ExecuteSqlCommand("DELETE FROM Rooms WHERE 1=1;");
 
             //
             //Rooms
