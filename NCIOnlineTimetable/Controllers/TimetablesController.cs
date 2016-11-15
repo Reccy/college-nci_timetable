@@ -38,43 +38,45 @@ namespace NCIOnlineTimetable.Controllers
 
         private static List<Slot> AggregateSlots(string roomName)
         {
-            TimetableContext context = new TimetableContext();
-
-            var query = from s in context.Slots
-                        where s.Room.Name.Equals(roomName)
-                        select s;
-
-            List<Slot> slots = new List<Slot>();
-
-            foreach (var result in query)
+            using (var context = new TimetableContext())
             {
-                slots.Add(result);
-            }
+                var query = from s in context.Slots
+                            where s.Room.Name.Equals(roomName)
+                            select s;
 
-            return slots;
+                List<Slot> slots = new List<Slot>();
+
+                foreach (var result in query)
+                {
+                    slots.Add(result);
+                }
+
+                return slots;
+            }
         }
 
         [ResponseType(typeof(List<Timetable>))]
         public IHttpActionResult GET()
         {
-            TimetableContext context = new TimetableContext();
-
-            var query = from timetable in context.Timetables
-                        select timetable;
-
-            foreach(var timetable in query)
+            using (var context = new TimetableContext())
             {
-                var slotQuery = from slot in timetable.Slots
-                                select slot;
+                var query = from timetable in context.Timetables
+                            select timetable;
 
-                IEnumerable<Slot> slots = context.Database.SqlQuery<Slot>(@"SELECT * FROM Slots WHERE Timetable_Id = '" + timetable.Id + "';");
+                foreach (var timetable in query)
+                {
+                    var slotQuery = from slot in timetable.Slots
+                                    select slot;
 
-                timetable.Slots = slots.ToList<Slot>();
+                    IEnumerable<Slot> slots = context.Database.SqlQuery<Slot>(@"SELECT * FROM Slots WHERE Timetable_Id = '" + timetable.Id + "';");
 
-                room_timetables.Add(timetable);
+                    timetable.Slots = slots.ToList<Slot>();
+
+                    room_timetables.Add(timetable);
+                }
+
+                return Ok(room_timetables);
             }
-
-            return Ok(room_timetables);
         }
     }
 }
